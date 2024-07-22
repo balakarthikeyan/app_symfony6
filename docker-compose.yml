@@ -19,7 +19,7 @@ services:
       - ./db_data:/var/lib/mysql
       - ./mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.conf
       # load the sql files from here on database creation
-      - ./mysql/:/docker-entrypoint-initdb.d/
+      # - ./mysql/:/docker-entrypoint-initdb.d/
     networks:
         - app_symfony6
   symfony6-php:
