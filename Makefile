@@ -9,6 +9,11 @@ PROJECT = "Symfony6"
 
 # Start the containers and build them every time this commands is called
 container-up:
+	@echo "Docker container starting ..."
+	$(DOCKER_COMPOSE) up -d
+
+# Start the containers and build them every time this commands is called
+container-build:
 	@echo "Docker container building and starting ..."
 	$(DOCKER_COMPOSE) up --build -d
 

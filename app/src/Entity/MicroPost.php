@@ -33,7 +33,7 @@ class MicroPost
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', orphanRemoval: true)] // without orphanRemoval relational data cannot be delete, default fetch is LAZY
     private Collection $comments;
 
     /**

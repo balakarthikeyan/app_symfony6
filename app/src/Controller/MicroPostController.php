@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\MicroPost;
+use App\Form\CommentType;
 use App\Form\MicroPostType;
+use App\Repository\CommentRepository;
 use App\Repository\MicroPostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,37 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MicroPostController extends AbstractController
 {
-    #[Route('/micro-post-testing', name: 'app_micro_post_testing')]
-    public function testing(MicroPostRepository $posts): Response
-    {
-        // $microPost = new MicroPost();
-        // $microPost->setTitle('It comes from controller');
-        // $microPost->setText('Hi!');
-        // $microPost->setCreated(new \DateTime());
-        // $posts->add($microPost, true);
-
-        // $microPost = $posts->find(4);
-        // $microPost->setText('Welcome to controller update');
-        // $posts->add($microPost, true);
-
-        // $microPost = $posts->find(4);
-        // $posts->remove($microPost, true);
-
-        // dd($posts->findAll()); // To get all records
-        // dd($posts->find(3)); // To get by primary id
-        // dd($posts->findOneBy(['title' => 'Welcome to US!'])); // To get by any field with one record
-        // dd($posts->findBy(['title' => 'Welcome to US!'])); // To get by any field with more record
-
-        dd($posts);
-    }
-
     #[Route('/micro-post', name: 'app_micro_post')]
     public function index(MicroPostRepository $posts): Response
     {
         return $this->render(
             'micro_post/index.html.twig',
             [
-                'posts' => $posts->findAll(),
+                'posts' => $posts->findAllWithComments(),
             ]
         );
     }
@@ -100,13 +79,13 @@ class MicroPostController extends AbstractController
     #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
     public function edit(MicroPost $post, Request $request, MicroPostRepository $posts): Response
     {
-        $form = $this->createFormBuilder($post)
-            ->add('title')
-            ->add('text')
-            ->add('submit', SubmitType::class, ['label' => 'Update'])
-            ->getForm();
+        // $form = $this->createFormBuilder($post)
+        //     ->add('title')
+        //     ->add('text')
+        //     ->add('submit', SubmitType::class, ['label' => 'Update'])
+        //     ->getForm();
 
-        // $form = $this->createForm(MicroPostType::class, $post);
+        $form = $this->createForm(MicroPostType::class, $post);
 
         $form->handleRequest($request);
 
@@ -124,7 +103,39 @@ class MicroPostController extends AbstractController
         return $this->render(
             'micro_post/edit.html.twig',
             [
-                'form' => $form
+                'form' => $form,
+                'post' => $post
+
+            ]
+        );
+    }
+
+    #[Route('/micro-post/{post}/comment', name: 'app_micro_post_comment')]
+    public function addComment(MicroPost $post, Request $request, CommentRepository $comments): Response
+    {
+        $form = $this->createForm(CommentType::class, new Comment());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+            $comment->setPost($post);
+            $comments->add($comment, true);
+
+            // Add a flash
+            $this->addFlash('success', 'Your comment have been updated.');
+
+            return $this->redirectToRoute(
+                'app_micro_post_show',
+                ['post' => $post->getId()]
+            );
+            // Redirect
+        }
+
+        return $this->renderForm(
+            'micro_post/comment.html.twig',
+            [
+                'form' => $form,
+                'post' => $post
             ]
         );
     }

@@ -16,6 +16,7 @@ class HelloController extends AbstractController
         ['message' => 'Bye!', 'created' => '2021/05/12']
     ];
 
+    #[Route('/', name: 'app_index')]
     public function indexWithResponse(): Response
     {
         return $this->render(
@@ -45,6 +46,6 @@ class HelloController extends AbstractController
                 'message' => $this->messages[$id]
             ]
         );
-        // return new Response( @implode(', ', $this->messages) );
+        // return new Response( 'Welcome to your new controller!' );
     }
 }
