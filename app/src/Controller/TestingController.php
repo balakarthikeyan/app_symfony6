@@ -62,11 +62,12 @@ class TestingController extends AbstractController
 
         // Add Comment by Post
 
-        // $post = $posts->find(4);
-        // $comment = new Comment();
-        // $comment->setText('Comment Hello 04');
-        // $comment->setPost($post);
-        // $comments->add($comment, true);
+        $post = $posts->find(4);
+        $comment = new Comment();
+        $comment->setText('Comment Hello 01');
+        $comment->setPost($post);
+        $comment->setAuthor($post->getAuthor());
+        $comments->add($comment, true);
 
         // Delete Comment by Post
 

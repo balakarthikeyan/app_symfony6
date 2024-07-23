@@ -34,7 +34,7 @@ class UserProfile
     #[ORM\Column(type: 'date', nullable: true)]
     private $dateOfBirth;
 
-    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'userProfile', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'userProfile', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

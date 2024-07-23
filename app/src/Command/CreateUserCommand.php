@@ -3,7 +3,9 @@
 namespace App\Command;
 
 use App\Entity\User;
+use App\Entity\UserProfile;
 use App\Repository\UserRepository;
+use App\Repository\UserProfileRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -21,7 +23,8 @@ class CreateUserCommand extends Command
 {
     public function __construct(
         private UserPasswordHasherInterface $userPasswordHasher,
-        private UserRepository $users
+        private UserRepository $users,
+        private UserProfileRepository $profiles
     ) {
         parent::__construct();
     }
@@ -52,6 +55,10 @@ class CreateUserCommand extends Command
             )
         );
         $this->users->add($user, true);
+
+        $profile = new UserProfile();
+        $profile->setUser($user);
+        $this->profiles->add($profile, true);
 
         $io->success(sprintf('User %s account was created!', $email));
 
