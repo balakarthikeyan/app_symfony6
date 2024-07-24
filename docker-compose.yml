@@ -32,6 +32,8 @@ services:
       - ./app:/var/www/app_symfony6
     depends_on:
       - symfony6-database
+    # environment:
+    #   PHP_OPCACHE_ENABLE: 0
     networks:
       - app_symfony6
   symfony6-nginx:
