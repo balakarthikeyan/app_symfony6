@@ -76,10 +76,11 @@ services:
       - 8082:8080
   symfony6-mailer:
     container_name: symfony6-mailer
-    image: schickling/mailcatcher
+    image: mailhog/mailhog:latest
     ports:
-      - 1080:1080
       - 1025:1025
+      - 8025:8025
+    restart: always
 networks:
     app_symfony6:
       name: app_symfony6

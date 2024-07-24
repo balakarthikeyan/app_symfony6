@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  mailcatcher:
+    container_name: mailcatcher
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
+    environment:
+      - VIRTUAL_HOST=mail.project.docker
+      - VIRTUAL_PORT=1080
+    networks:
+      - app_symfony6
+networks:
+    app_symfony6:
+      name: app_symfony6
