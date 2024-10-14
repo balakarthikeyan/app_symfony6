@@ -19,18 +19,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-        # _instanceof:
-        #     # services whose classes are instances of QuoteFetcherInterface will be tagged automatically
-        #     App\Interface\QuoteFetcherInterface:
-        #         tags: ['app.quote_fetcher']
-        # api_key_authenticator:
-        #     class: App\Security\TokenAuthenticator
-        #     arguments: ["@router"]
-    # App\EventSubscriber\JwtEventSubscriber\:
-    #     arguments:
-    #         - '@serializer'
-    #     tags:
-    #         - { name: kernel.event_subscriber }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

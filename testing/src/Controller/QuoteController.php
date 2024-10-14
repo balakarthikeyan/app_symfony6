@@ -13,9 +13,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+#[Route('/quote')]
 class QuoteController extends AbstractController
 {
-    #[Route('/quote', name: 'quote')]
+    #[Route('/list', name: 'app_quote_list')]
     public function index(  QuoteRepository $quoteRepository ): Response
     {
         return $this->render('quote/index.html.twig', [
@@ -24,7 +25,7 @@ class QuoteController extends AbstractController
         ]);
     }
 
-    #[Route('/form', name: 'form')] 
+    #[Route('/form', name: 'app_quote_form')] 
     public function form( Request $request, QuoteRepository $quoteRepository ): Response
     {
         $quote = new Quote();
@@ -41,7 +42,7 @@ class QuoteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // $data   = $form->getData(); print_r($data); die();
             $quoteRepository->save($quote, true);
-            return $this->redirectToRoute('quote', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_quote_list', [], Response::HTTP_SEE_OTHER);
         }
         
         // Using createFormBuilder

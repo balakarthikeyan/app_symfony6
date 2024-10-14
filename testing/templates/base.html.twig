@@ -25,6 +25,12 @@
                 <li {% if route_name matches '{^user}' %} class="nav-item active" {% else %} class="nav-item" {% endif %} >
                     <a class="nav-link" href="{{ path('app_user_index') }}">Users</a>
                 </li>
+                <li {% if route_name matches '{^project}' %} class="nav-item active" {% else %} class="nav-item" {% endif %} >
+                    <a class="nav-link" href="{{ path('app_project_index') }}">Projects</a>
+                </li>
+                <li {% if route_name matches '{^quote}' %} class="nav-item active" {% else %} class="nav-item" {% endif %} >
+                    <a class="nav-link" href="{{ path('app_quote_list') }}">Quotes</a>
+                </li>
                 {% endif %}
             </ul>
             <!-- right side -->

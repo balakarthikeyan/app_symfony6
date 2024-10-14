@@ -10,6 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -79,5 +84,23 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @param User $user
+     * @return JsonResponse
+     */
+    #[Route('/{id}/detail', name: 'app_user_detail', methods: ['GET'])]
+    public function detail(User $user){
+        $this->denyAccessUnlessGranted('view', $user);
+        return new JsonResponse($this->serialize($user), 200);
+    }
+
+    protected function serialize(User $user){
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $json = $serializer->serialize($user, 'json');
+        return $json;
     }
 }
