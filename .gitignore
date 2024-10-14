@@ -1,4 +1,6 @@
-/db_data/
+/db_data_app/
+/db_data_testing/
+/db_data_web/
 /.github/
 /testing/
-/course/
+/web/
