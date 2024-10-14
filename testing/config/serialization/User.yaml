@@ -1,0 +1,8 @@
+App\Entity\User:
+    attributes:
+        id:
+            groups: [ 'public' ]
+        identifier:
+            groups: [ 'public' ]
+        roles:
+            groups: [ 'public' ]

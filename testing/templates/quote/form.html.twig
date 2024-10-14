@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quotes{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}!</h1>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_row(form.quote, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.historian, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.year, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</div> 
+{% endblock %}
